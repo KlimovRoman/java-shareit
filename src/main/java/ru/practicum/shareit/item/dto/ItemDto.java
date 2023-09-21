@@ -12,10 +12,13 @@ public class ItemDto {
     private int id;
     private String name;
     private String description;
-    private boolean available;
-    private User owner;
-    private ItemRequest request;
+    private Boolean available;
 
-    public ItemDto(int id, String name, String description, Boolean available, User owner, ItemRequest request) {
+
+    public ItemDto(int id, String name, String description, Boolean available) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.available = available;
     }
 }

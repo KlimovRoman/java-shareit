@@ -15,4 +15,13 @@ public class Item {
     private Boolean available; //статус о том, доступна или нет вещь для аренды
     private User owner; //владелец вещи
     private ItemRequest request; //если вещь была создана по запросу другого пользователя, то в этом поле будет храниться ссылка на соответствующий запрос
+
+    public Item(int id, String name, String description, Boolean available) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.available = available;
+        this.owner = null;
+        this.request = null;
+    }
 }
