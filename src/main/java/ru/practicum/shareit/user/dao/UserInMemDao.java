@@ -58,7 +58,7 @@ public class UserInMemDao implements UserDao {
         if (user == null) {
             throw  new EntityNotFoundException("Пользователь не найден!");
         } else {
-            return Optional.ofNullable(users.get(id));
+            return Optional.ofNullable(user);
         }
     }
 

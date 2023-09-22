@@ -16,12 +16,12 @@ public class Item {
     private User owner; //владелец вещи
     private ItemRequest request; //если вещь была создана по запросу другого пользователя, то в этом поле будет храниться ссылка на соответствующий запрос
 
-    public Item(int id, String name, String description, Boolean available) {
+    public Item(int id, String name, String description, Boolean available, User user) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.available = available;
-        this.owner = null;
+        this.owner = user;
         this.request = null;
     }
 }
