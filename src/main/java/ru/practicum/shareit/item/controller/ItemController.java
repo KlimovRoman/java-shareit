@@ -23,7 +23,7 @@ public class ItemController {
     private final ItemService itemService; //поле куда будет передан сервис через контструктор с помощью зависимостей
 
     @PostMapping
-    public ItemDto addItem( @RequestHeader("X-Sharer-User-Id") int userId, @Valid @RequestBody ItemDto newItem) {
+    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") int userId, @Valid @RequestBody ItemDto newItem) {
         return itemService.addItem(userId,newItem);
     }
 
@@ -33,7 +33,7 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDto getItem(@PathVariable int itemId ) {
+    public ItemDto getItem(@PathVariable int itemId) {
         return itemService.getItemById(itemId);
     }
 

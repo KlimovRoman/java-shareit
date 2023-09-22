@@ -28,7 +28,7 @@ public class UserInMemDao implements UserDao {
         final int id = userToUpd.getId();
         User user = users.get(id);
         if (user != null) {
-            if (userToUpd.getEmail() != null){
+            if (userToUpd.getEmail() != null) {
                 if (!user.getEmail().equals(userToUpd.getEmail())) {
                     emailValidation(userToUpd);
                     String emailToDel = user.getEmail();

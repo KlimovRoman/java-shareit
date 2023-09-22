@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUsers() {
         List<UserDto> usrsDto = new ArrayList<>();
         List<User> usrs = userDao.getAllUsers();
-        for(User usr: usrs) {
+        for (User usr: usrs) {
             usrsDto.add(UserMapper.userToDto(usr));
         }
         return usrsDto;

@@ -71,12 +71,12 @@ public class ItemInMemDao implements ItemDao {
         } else {
             List<ItemDto> itemsForUserSearch = new ArrayList<>();
             for (Item item : items.values()) {
-                if (!item.getAvailable()) {
-
-                } else if (item.getName().toLowerCase().contains(text)) {
-                    itemsForUserSearch.add(ItemMapper.itemToDto(item));
-                } else if (item.getDescription().toLowerCase().contains(text)) {
-                    itemsForUserSearch.add(ItemMapper.itemToDto(item));
+                if (item.getAvailable()) {
+                    if (item.getName().toLowerCase().contains(text)) {
+                        itemsForUserSearch.add(ItemMapper.itemToDto(item));
+                    } else if (item.getDescription().toLowerCase().contains(text)) {
+                        itemsForUserSearch.add(ItemMapper.itemToDto(item));
+                    }
                 }
             }
             log.info("Запрошен поиск вещей по слову  {}", text);
