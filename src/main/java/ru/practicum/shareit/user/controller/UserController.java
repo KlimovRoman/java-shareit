@@ -1,16 +1,16 @@
 package ru.practicum.shareit.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.service.UserService;
+import ru.practicum.shareit.util.Create;
+import ru.practicum.shareit.util.Update;
 
-import javax.validation.Valid;
+
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/users")
@@ -19,12 +19,12 @@ public class UserController {
 
 
     @PostMapping
-    public UserDto addUser(@Valid @RequestBody UserDto userToAdd) {
+    public UserDto addUser(@Validated(Create.class) @RequestBody UserDto userToAdd) {
         return userService.addUser(userToAdd);
     }
 
     @PatchMapping("/{id}")
-    public UserDto updUser(@PathVariable int id, @RequestBody UserDto userToUpd) {
+    public UserDto updUser(@PathVariable int id, @Validated(Update.class) @RequestBody UserDto userToUpd) {
         return userService.updUser(id, userToUpd);
     }
 

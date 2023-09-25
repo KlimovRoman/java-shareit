@@ -2,7 +2,6 @@ package ru.practicum.shareit.item.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.shareit.exeption.EntityNotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
@@ -31,17 +30,17 @@ public class ItemInMemDao implements ItemDao {
             log.info("Запрошена вещь с id = {}", itemId);
             return Optional.ofNullable(item);
         } else {
-            throw new EntityNotFoundException("Вещь не найденена!");
+            return Optional.empty();
         }
     }
 
     @Override
     public Item updItem(ItemDto itemDto, int itemId) {
         Item itemToUpd = items.get(itemId);
-        if (itemDto.getName() != null) {
+        if (itemDto.getName() != null && !itemDto.getName().isBlank()) {
             itemToUpd.setName(itemDto.getName());
         }
-        if (itemDto.getDescription() != null) {
+        if (itemDto.getDescription() != null && !itemDto.getDescription().isBlank()) {
             itemToUpd.setDescription(itemDto.getDescription());
         }
         if (itemDto.getAvailable() != null) {
@@ -53,7 +52,6 @@ public class ItemInMemDao implements ItemDao {
 
     @Override
     public List<ItemDto> getItemsByUser(int userId) {
-
         List<ItemDto> itemsForUser = new ArrayList<>();
         for (Item item: items.values()) {
             if (item.getOwner().getId() == userId) {
@@ -66,21 +64,17 @@ public class ItemInMemDao implements ItemDao {
 
     @Override
     public List<ItemDto> searchItems(String text) {
-        if (text.isBlank()) {
-            return new ArrayList<>();
-        } else {
-            List<ItemDto> itemsForUserSearch = new ArrayList<>();
-            for (Item item : items.values()) {
-                if (item.getAvailable()) {
-                    if (item.getName().toLowerCase().contains(text)) {
-                        itemsForUserSearch.add(ItemMapper.itemToDto(item));
-                    } else if (item.getDescription().toLowerCase().contains(text)) {
-                        itemsForUserSearch.add(ItemMapper.itemToDto(item));
-                    }
+        List<ItemDto> itemsForUserSearch = new ArrayList<>();
+        for (Item item : items.values()) {
+            if (item.getAvailable()) {
+                if (item.getName().toLowerCase().contains(text)) {
+                    itemsForUserSearch.add(ItemMapper.itemToDto(item));
+                } else if (item.getDescription().toLowerCase().contains(text)) {
+                    itemsForUserSearch.add(ItemMapper.itemToDto(item));
                 }
             }
-            log.info("Запрошен поиск вещей по слову  {}", text);
-            return itemsForUserSearch;
         }
+        log.info("Запрошен поиск вещей по слову  {}", text);
+        return itemsForUserSearch;
     }
 }

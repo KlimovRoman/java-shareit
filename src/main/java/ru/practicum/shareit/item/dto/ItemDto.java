@@ -1,21 +1,20 @@
 package ru.practicum.shareit.item.dto;
 import lombok.Data;
+import ru.practicum.shareit.util.Create;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * TODO Sprint add-controllers.
- */
+
 @Data
 public class ItemDto {
     private int id;
-    @NotBlank
+    @NotBlank(groups = {Create.class})
     private String name;
-    @NotBlank
+    @NotBlank(groups = {Create.class})
     private String description;
-    @NotNull
+    @NotNull(groups = {Create.class})
     private Boolean available;
-
 
     public ItemDto(int id, String name, String description, Boolean available) {
         this.id = id;

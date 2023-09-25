@@ -6,29 +6,24 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
-
-import javax.validation.Valid;
+import ru.practicum.shareit.util.Create;
+import ru.practicum.shareit.util.Update;
 import java.util.List;
-
-/**
- * TODO Sprint add-controllers.
- */
 
 @Slf4j
 @RequiredArgsConstructor
-@Validated
 @RestController
 @RequestMapping("/items")
 public class ItemController {
     private final ItemService itemService; //поле куда будет передан сервис через контструктор с помощью зависимостей
 
     @PostMapping
-    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") int userId, @Valid @RequestBody ItemDto newItem) {
+    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") int userId, @Validated(Create.class) @RequestBody ItemDto newItem) {
         return itemService.addItem(userId,newItem);
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updItem(@RequestHeader("X-Sharer-User-Id") int userId, @PathVariable int itemId, @RequestBody ItemDto itemDto) {
+    public ItemDto updItem(@RequestHeader("X-Sharer-User-Id") int userId, @PathVariable int itemId, @Validated(Update.class) @RequestBody ItemDto itemDto) {
         return itemService.updItem(userId,itemId,itemDto);
     }
 

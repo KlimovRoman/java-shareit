@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao; //поле куда будет передан репозиторий через контструктор с помощью зависимостей
-    // связали зависимостью контроллер и сервис через аннотацию RequiredArgsConstructor
+    // связали зависимостью сервис и репозиторий через аннотацию RequiredArgsConstructor
 
     @Override
     public UserDto addUser(UserDto userDtoToAdd) {

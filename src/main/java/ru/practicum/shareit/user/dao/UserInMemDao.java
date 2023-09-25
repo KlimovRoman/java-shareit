@@ -28,7 +28,7 @@ public class UserInMemDao implements UserDao {
         final int id = userToUpd.getId();
         User user = users.get(id);
         if (user != null) {
-            if (userToUpd.getEmail() != null) {
+            if (userToUpd.getEmail() != null && !userToUpd.getEmail().isBlank()) {
                 if (!user.getEmail().equals(userToUpd.getEmail())) {
                     emailValidation(userToUpd);
                     String emailToDel = user.getEmail();
@@ -36,7 +36,7 @@ public class UserInMemDao implements UserDao {
                     emails.remove(emailToDel);
                 }
             }
-            if (userToUpd.getName() != null) {
+            if (userToUpd.getName() != null && !userToUpd.getName().isBlank()) {
                 user.setName(userToUpd.getName());
             }
             log.info("Обновлен юзер с id = {}", id);
@@ -56,7 +56,7 @@ public class UserInMemDao implements UserDao {
     public Optional<User> getUserById(int id) {
         User user = users.get(id);
         if (user == null) {
-            throw  new EntityNotFoundException("Пользователь не найден!");
+            return Optional.empty();
         } else {
             return Optional.ofNullable(user);
         }
@@ -69,7 +69,7 @@ public class UserInMemDao implements UserDao {
         if (user == null) {
             throw  new EntityNotFoundException("Пользователь не найден!");
         } else {
-            emails.remove(users.get(id).getEmail());
+            emails.remove(user.getEmail());
             return users.remove(id);
         }
     }

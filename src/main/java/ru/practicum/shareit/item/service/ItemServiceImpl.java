@@ -46,11 +46,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> searchItems(String text) {
-        if (text != null) {
-            String text2 = text.toLowerCase();
-            return itemDao.searchItems(text2);
+        String text2 = text.toLowerCase();
+        if (text2.isBlank()) {
+            return  List.of();
         } else {
-            throw new EntityNotFoundException("Строка поиска пуста!");
+            return itemDao.searchItems(text2);
         }
     }
 }
