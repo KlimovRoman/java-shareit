@@ -28,7 +28,7 @@ public class ItemInMemDao implements ItemDao {
         Item item = items.get(itemId);
         if (item != null) {
             log.info("Запрошена вещь с id = {}", itemId);
-            return Optional.ofNullable(item);
+            return Optional.of(item);
         } else {
             return Optional.empty();
         }

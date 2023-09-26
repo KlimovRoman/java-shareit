@@ -58,19 +58,19 @@ public class UserInMemDao implements UserDao {
         if (user == null) {
             return Optional.empty();
         } else {
-            return Optional.ofNullable(user);
+            return Optional.of(user);
         }
     }
 
 
     @Override
     public User delUserById(int id) {
-        User user = users.get(id);
+        User user = users.remove(id);;
         if (user == null) {
             throw  new EntityNotFoundException("Пользователь не найден!");
         } else {
             emails.remove(user.getEmail());
-            return users.remove(id);
+            return user;
         }
     }
 

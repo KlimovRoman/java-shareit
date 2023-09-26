@@ -46,11 +46,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> searchItems(String text) {
-        String text2 = text.toLowerCase();
-        if (text2.isBlank()) {
+        if (text.isBlank()) {
             return  List.of();
         } else {
-            return itemDao.searchItems(text2);
+            text =  text.toLowerCase();
+            return itemDao.searchItems(text);
         }
     }
 }
