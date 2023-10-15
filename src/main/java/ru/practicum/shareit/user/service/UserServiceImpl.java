@@ -3,6 +3,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exeption.EntityNotFoundException;
 import ru.practicum.shareit.user.dao.UserDao;
+import ru.practicum.shareit.user.dao.UserRepository;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.dto.UserMapper;
 import ru.practicum.shareit.user.model.User;
@@ -15,6 +16,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao; //поле куда будет передан репозиторий через контструктор с помощью зависимостей
     // связали зависимостью сервис и репозиторий через аннотацию RequiredArgsConstructor
+    private final UserRepository userRepo;
+
+    public void testRepo() {
+        userRepo.findAll();
+    }
 
     @Override
     public UserDto addUser(UserDto userDtoToAdd) {

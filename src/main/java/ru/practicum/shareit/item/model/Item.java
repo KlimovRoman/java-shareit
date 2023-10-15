@@ -2,7 +2,6 @@ package ru.practicum.shareit.item.model;
 
 import lombok.Data;
 import ru.practicum.shareit.user.model.User;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +14,8 @@ public class Item {
     private String name; //краткое название
     private String description; //развёрнутое описание
     private Boolean available; //статус о том, доступна или нет вещь для аренды
-    @Column(name = "owner_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner; //владелец вещи
 
     public Item(int id, String name, String description, Boolean available, User user) {
@@ -24,5 +24,8 @@ public class Item {
         this.description = description;
         this.available = available;
         this.owner = user;
+    }
+
+    public Item() {
     }
 }
