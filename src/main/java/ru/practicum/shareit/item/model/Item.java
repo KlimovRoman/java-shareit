@@ -13,8 +13,9 @@ public class Item {
     private int id; //уникальный идентификатор вещи
     private String name; //краткое название
     private String description; //развёрнутое описание
+    @Column(name = "is_available", nullable = false)
     private Boolean available; //статус о том, доступна или нет вещь для аренды
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner; //владелец вещи
 

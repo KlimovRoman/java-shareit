@@ -13,5 +13,5 @@ public interface UserService {
 
     public UserDto getUserById(int id);
 
-    public UserDto delUserById(int id);
+    public void delUserById(int id);
 }

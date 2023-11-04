@@ -12,9 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; //уникальный идентификатор пользователя
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name; //имя или логин пользователя
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", unique = true)
     private String email; //адрес электронной почты.два пользователя не могут иметь одинаковый адрес электронной почты
 
     public User(int id, String name, String email) {
