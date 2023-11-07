@@ -16,6 +16,7 @@ public class BookingCreateDto {
         this.start = start;
         this.end = end;
     }
+
     public BookingCreateDto() {
 
     }

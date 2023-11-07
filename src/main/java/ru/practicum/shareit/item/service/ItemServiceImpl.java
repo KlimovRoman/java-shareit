@@ -83,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
         List<Booking> booksForItem = new ArrayList<>(); // тут хрантся все брони для конкретной вещи
         List<Comment> comments = new ArrayList<>();
         List<CommentDto> commentsDto = new ArrayList<>();
-        for (Item item: items){
+        for (Item item: items) {
             booksForItem =  bookingRepo.findByItem_Id(item);
             comments = commentRepo.findByItem_Id(item);
             for (Comment comment: comments) {
