@@ -76,7 +76,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_Id(booker);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
                     return booksDto;
@@ -89,7 +89,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_Id(booker);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         if (book.getEnd().isBefore(LocalDateTime.now())) {
                             booksDto.add(BookingMapper.bookingToDto(book));
                         }
@@ -104,7 +104,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_Id(booker);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         if (book.getStart().isAfter(LocalDateTime.now())) {
                             booksDto.add(BookingMapper.bookingToDto(book));
                         }
@@ -119,7 +119,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_Id(booker);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         if (book.getStart().isBefore(LocalDateTime.now()) && book.getEnd().isAfter(LocalDateTime.now())) {
                             booksDto.add(BookingMapper.bookingToDto(book));
                         }
@@ -134,7 +134,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_IdAndStatus(booker,BookingStatus.WAITING);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
                     return booksDto;
@@ -147,7 +147,7 @@ public class BookingServiceImpl implements BookingService {
                 booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найдено!"));
                 books = bookingRepository.findByBooker_IdAndStatus(booker,BookingStatus.REJECTED);
                 if (books.size() > 0) {
-                    for (Booking book: books){
+                    for (Booking book: books) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
                     return booksDto;
@@ -177,7 +177,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_Id(item));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     booksDto.add(BookingMapper.bookingToDto(book));
                 }
               return booksDto;
@@ -198,7 +198,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_Id(item));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     if (book.getEnd().isAfter(LocalDateTime.now())) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
@@ -210,7 +210,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_Id(item));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     if (book.getStart().isBefore(LocalDateTime.now()) && book.getEnd().isAfter(LocalDateTime.now())) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
@@ -222,7 +222,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_IdAndStatus(item,BookingStatus.WAITING));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     booksDto.add(BookingMapper.bookingToDto(book));
                 }
                 return booksDto;
@@ -232,7 +232,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_IdAndStatus(item,BookingStatus.REJECTED));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     booksDto.add(BookingMapper.bookingToDto(book));
                 }
                 return booksDto;

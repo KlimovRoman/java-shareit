@@ -48,13 +48,13 @@ public class ItemServiceImpl implements ItemService {
         if (userId !=  item.getOwner().getId()) {
             throw new EntityNotFoundException("Ошибка! Вещь может просматривать только автор!");
         }
-        if(itemDtoToAdd.getName() != null && !itemDtoToAdd.getName().isBlank()) {
+        if (itemDtoToAdd.getName() != null && !itemDtoToAdd.getName().isBlank()) {
             item.setName(itemDtoToAdd.getName());
         }
-        if(itemDtoToAdd.getDescription() != null && !itemDtoToAdd.getDescription().isBlank()) {
+        if (itemDtoToAdd.getDescription() != null && !itemDtoToAdd.getDescription().isBlank()) {
             item.setDescription(itemDtoToAdd.getDescription());
         }
-        if(itemDtoToAdd.getAvailable() != null ) {
+        if (itemDtoToAdd.getAvailable() != null ) {
             item.setAvailable(itemDtoToAdd.getAvailable());
         }
 
