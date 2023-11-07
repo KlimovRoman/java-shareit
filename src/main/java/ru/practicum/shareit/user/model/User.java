@@ -1,7 +1,6 @@
 package ru.practicum.shareit.user.model;
 import lombok.Data;
 import javax.persistence.*;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -23,7 +22,7 @@ public class User {
         this.email = email;
     }
 
-    public User(){
+    public User() {
 
     }
 }

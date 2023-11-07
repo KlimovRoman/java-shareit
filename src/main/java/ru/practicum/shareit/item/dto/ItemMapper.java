@@ -30,7 +30,7 @@ public class ItemMapper {
         );
     }
 
-    public static ItemDto itemToDtoBooks (Item item, Booking lastBooking, Booking nextBooking,List<CommentDto> comments) {
+    public static ItemDto itemToDtoBooks(Item item, Booking lastBooking, Booking nextBooking,List<CommentDto> comments) {
         return new ItemDto(
                 item.getId(),
                 item.getName(),

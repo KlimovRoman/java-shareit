@@ -38,6 +38,7 @@ public class Booking {
         this.booker = booker;
         this.status = status;
     }
+
     public Booking() {
 
     }

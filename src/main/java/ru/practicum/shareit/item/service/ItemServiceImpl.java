@@ -54,7 +54,7 @@ public class ItemServiceImpl implements ItemService {
         if (itemDtoToAdd.getDescription() != null && !itemDtoToAdd.getDescription().isBlank()) {
             item.setDescription(itemDtoToAdd.getDescription());
         }
-        if (itemDtoToAdd.getAvailable() != null ) {
+        if (itemDtoToAdd.getAvailable() != null) {
             item.setAvailable(itemDtoToAdd.getAvailable());
         }
 
@@ -94,9 +94,9 @@ public class ItemServiceImpl implements ItemService {
             lastBooking.setEnd(LocalDateTime.now());
             nextBooking.setStart(LocalDateTime.now().plusDays(365));
 
-            for (Booking book: booksForItem){
+            for (Booking book: booksForItem) {
                 if (book.getEnd().isBefore(LocalDateTime.now())) {
-                    if (book.getEnd().isAfter(lastBooking.getEnd())){
+                    if (book.getEnd().isAfter(lastBooking.getEnd())) {
                         lastBooking = book; // находим максимальную дату конца до текущего дня, она и будет датой последнего
                     }
                 } else if (book.getStart().isAfter(LocalDateTime.now())) {

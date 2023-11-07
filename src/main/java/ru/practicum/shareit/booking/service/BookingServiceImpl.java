@@ -186,7 +186,7 @@ public class BookingServiceImpl implements BookingService {
                 for (Item item: items) {
                     books.addAll(bookingRepository.findByItem_Id(item));
                 }
-                for (Booking book: books){
+                for (Booking book: books) {
                     if (book.getEnd().isBefore(LocalDateTime.now())) {
                         booksDto.add(BookingMapper.bookingToDto(book));
                     }
