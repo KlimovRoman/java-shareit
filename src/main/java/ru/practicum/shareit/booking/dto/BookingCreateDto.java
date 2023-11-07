@@ -10,13 +10,13 @@ public class BookingCreateDto {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public BookingCreateDto (int itemId, int id, LocalDateTime start, LocalDateTime end ) {
+    public BookingCreateDto(int itemId, int id, LocalDateTime start, LocalDateTime end ) {
         this.itemId = itemId;
         this.id = id;
         this.start = start;
         this.end = end;
     }
-    public BookingCreateDto () {
+    public BookingCreateDto() {
 
     }
 }

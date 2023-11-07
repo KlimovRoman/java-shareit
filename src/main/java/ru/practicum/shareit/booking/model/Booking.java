@@ -1,5 +1,4 @@
 package ru.practicum.shareit.booking.model;
-
 import lombok.Data;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
@@ -31,7 +30,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    public Booking (int id, LocalDateTime start, LocalDateTime end, Item item, User booker, BookingStatus status ) {
+    public Booking(int id, LocalDateTime start, LocalDateTime end, Item item, User booker, BookingStatus status) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -39,7 +38,7 @@ public class Booking {
         this.booker = booker;
         this.status = status;
     }
-    public Booking () {
+    public Booking() {
 
     }
 }

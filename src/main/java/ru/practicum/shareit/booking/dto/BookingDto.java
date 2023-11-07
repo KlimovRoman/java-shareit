@@ -16,7 +16,7 @@ public class BookingDto {
     private BookingStatus status;
 
 
-    public BookingDto (int id, LocalDateTime start, LocalDateTime end, Item item, User booker, BookingStatus status ) {
+    public BookingDto(int id, LocalDateTime start, LocalDateTime end, Item item, User booker, BookingStatus status ) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -24,7 +24,8 @@ public class BookingDto {
         this.booker = booker;
         this.status = status;
     }
-    public BookingDto () {
+
+    public BookingDto() {
 
     }
 }

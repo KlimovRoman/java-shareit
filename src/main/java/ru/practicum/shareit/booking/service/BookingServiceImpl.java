@@ -29,7 +29,7 @@ public class BookingServiceImpl implements BookingService {
     private final ItemRepository itemRepository;
 
     @Override
-    public BookingDto createBooking (int userId, BookingCreateDto bookingCreateDto){
+    public BookingDto createBooking(int userId, BookingCreateDto bookingCreateDto) {
         log.info("JPA - Добавление в БД booking");
         User booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("пользователь не найден!"));
         Item item = itemRepository.findById(bookingCreateDto.getItemId()).orElseThrow(() -> new EntityNotFoundException("Вещь не найдена!"));
@@ -38,7 +38,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingDto approveBooking (int userId,int bookingId,boolean approved) {
+    public BookingDto approveBooking(int userId,int bookingId,boolean approved) {
         // надо обновить в бд бронирование присвоев ему новый статус
         log.info("JPA - Обновление статуса в БД booking");
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new EntityNotFoundException("Бронирование не найдено!"));
@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingDto getBookingById (int userId,int bookingId) {
+    public BookingDto getBookingById(int userId,int bookingId) {
         //user должен быть либо пользлвателем вещи либо создателем брони
         log.info("JPA - getBookingById ");
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new EntityNotFoundException("Бронирование не найдено!"));
@@ -160,7 +160,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDto>  getAllBookingsByItemsOwner (int userId, BookingState state) {
+    public List<BookingDto>  getAllBookingsByItemsOwner(int userId, BookingState state) {
         User owner = new User();
         List<BookingDto> booksDto = new ArrayList<>();
         List<Booking> books = new ArrayList<>();
