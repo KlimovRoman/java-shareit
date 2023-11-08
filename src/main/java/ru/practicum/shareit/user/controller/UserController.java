@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public UserDto delUserById(@PathVariable int id) {
-        return userService.delUserById(id);
+    public void delUserById(@PathVariable int id) {
+         userService.delUserById(id);
     }
 }
