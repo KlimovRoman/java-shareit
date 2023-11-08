@@ -16,6 +16,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.dao.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,24 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDto createBooking(int userId, BookingCreateDto bookingCreateDto) {
         log.info("JPA - Добавление в БД booking");
-        User booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("пользователь не найден!"));
+        if (bookingCreateDto.getEnd().isBefore(LocalDateTime.now()) ||
+                            bookingCreateDto.getEnd().isBefore(bookingCreateDto.getStart()) ||
+                            bookingCreateDto.getEnd().isEqual(bookingCreateDto.getStart()) ||
+                            bookingCreateDto.getStart().isBefore(LocalDateTime.now())) {
+            throw  new ValidationException("Время завершения не может быть в прошлом!");
+        }
         Item item = itemRepository.findById(bookingCreateDto.getItemId()).orElseThrow(() -> new EntityNotFoundException("Вещь не найдена!"));
-        Booking bookingForSave = BookingMapper.createDtoToBooking(bookingCreateDto, item, booker);
-        return BookingMapper.bookingToDto(bookingRepository.save(bookingForSave));
+        User booker = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("пользователь не найден!"));
+        if (item.getOwner().getId() == booker.getId()) {
+            throw new EntityNotFoundException("Владелец не может забронировать вещь!");
+        }
+        if (item.getAvailable()) {
+            Booking bookingForSave = BookingMapper.createDtoToBooking(bookingCreateDto, item, booker);
+            return BookingMapper.bookingToDto(bookingRepository.save(bookingForSave));
+        } else {
+           throw  new ValidationException("Вещь недоступна для бронирования!");
+        }
+
     }
 
     @Override
@@ -44,10 +59,16 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new EntityNotFoundException("Бронирование не найдено!"));
         if (booking.getItem().getOwner().getId() != userId) {
             throw new EntityNotFoundException("Ошибка! Вещь может просматривать только автор!");
+        }
+
+        BookingStatus bS = booking.getStatus();
+
+        if (BookingStatus.APPROVED.equals(bS) || BookingStatus.REJECTED.equals(bS)) {
+            throw new ValidationException("Ошибка! Статус вещи уже нельзя изменять");
         } else if (approved) {
             booking.setStatus(BookingStatus.APPROVED);
         } else {
-            booking.setStatus(BookingStatus.CANCELED);
+            booking.setStatus(BookingStatus.REJECTED);
         }
         return BookingMapper.bookingToDto(bookingRepository.save(booking));
     }

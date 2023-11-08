@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.repo.BookingRepository;
 import ru.practicum.shareit.exeption.EntityNotFoundException;
 import ru.practicum.shareit.item.dao.CommentRepository;
@@ -67,14 +68,20 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepo.findById(itemId).orElseThrow(() -> new EntityNotFoundException("Вещь не найдена!"));
         List<CommentDto> commentsDto = new ArrayList<>();
         List<Comment> comments = commentRepo.findByItem_Id(item);
+
         for (Comment comment: comments) {
             commentsDto.add(ItemMapper.commentToDto(comment));
         }
-        return ItemMapper.itemToDtoComments(item,commentsDto);
+
+        Booking lastBooking = bookingRepo.findFirstByItemIdAndStartBeforeOrderByEndDesc(item.getId(), LocalDateTime.now());
+        Booking nextBooking = bookingRepo.findFirstByItemIdAndStartAfterAndStatusOrderByStartAsc(item.getId(), LocalDateTime.now(), BookingStatus.APPROVED);
+
+        return ItemMapper.itemToDtoBooks(item,lastBooking,nextBooking,commentsDto);
+
     }
 
-    @Override
-    public List<ItemDto> getItemsByUser(int userId) {
+   // @Override
+    public List<ItemDto> getItemsByUserDEL(int userId) {
         log.info("JPA - getItemsByUser id = {}",userId);
 
         User user = userRepo.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найден!"));
@@ -98,6 +105,7 @@ public class ItemServiceImpl implements ItemService {
                 if (book.getEnd().isBefore(LocalDateTime.now())) {
                     if (book.getEnd().isAfter(lastBooking.getEnd())) {
                         lastBooking = book; // находим максимальную дату конца до текущего дня, она и будет датой последнего
+
                     }
                 } else if (book.getStart().isAfter(LocalDateTime.now())) {
                     if (book.getStart().isBefore(nextBooking.getStart())) {
@@ -110,6 +118,33 @@ public class ItemServiceImpl implements ItemService {
         }
         return dtoItems;
     }
+
+
+    @Override
+    public List<ItemDto> getItemsByUser(int userId) {
+        log.info("JPA - getItemsByUser id = {}",userId);
+
+        User user = userRepo.findById(userId).orElseThrow(() -> new EntityNotFoundException("Юзер не найден!"));
+        List<Item> items = new ArrayList<>(itemRepo.findByUserId(user));
+        List<ItemDto> dtoItems = new ArrayList<>(); // итогоый список ДТОшек для ретерна
+        List<Booking> booksForItem = new ArrayList<>(); // тут хрантся все брони для конкретной вещи
+        List<Comment> comments = new ArrayList<>();
+        List<CommentDto> commentsDto = new ArrayList<>();
+
+        for (Item item: items) {
+            comments = commentRepo.findByItem_Id(item);
+            for (Comment comment: comments) {
+                commentsDto.add(ItemMapper.commentToDto(comment));
+            }
+
+            Booking lastBooking = bookingRepo.findFirstByItemIdAndStartBeforeOrderByEndDesc(item.getId(), LocalDateTime.now());
+            Booking nextBooking = bookingRepo.findFirstByItemIdAndStartAfterAndStatusOrderByStartAsc(item.getId(), LocalDateTime.now(), BookingStatus.APPROVED);
+
+            dtoItems.add(ItemMapper.itemToDtoBooks(item,lastBooking,nextBooking,commentsDto));
+        }
+        return dtoItems;
+    }
+
 
     @Override
     public CommentDto addComment(int itemId, int userId, Comment comment) {
